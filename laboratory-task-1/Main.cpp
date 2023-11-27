@@ -1,7 +1,7 @@
 #include <iostream>
 int main()
 {
-	//Вариант 8
+	//Р’Р°СЂРёР°РЅС‚ 8
 	int k;
 	double x, eps, res = 1, el = 1;
 	while (true)
