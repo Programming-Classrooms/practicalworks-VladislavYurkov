@@ -1,4 +1,4 @@
-// Вариант 42
+// Р’Р°СЂРёР°РЅС‚ 42
 #include <iostream>
 #include <ctime>
 void input_method_choose(bool input_method, double arr[], int lenght) {
@@ -90,9 +90,6 @@ int main()
 	uint8_t method;
 	std::cin >> method;
 	input_method_choose(--method, arr, n);
-	// Цепочка максимальной длины
-	// Сумма между нулями
-	// Упорядочивание
 	for (int i = 0; i < n; i += 2)
 	{
 		for (int j = i + 2; j < n; j += 2)
