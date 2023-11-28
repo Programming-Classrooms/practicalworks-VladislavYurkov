@@ -14,7 +14,7 @@ int main()
 	/*
 	8.√(1 + 𝑥) = 1 + (1/2)*𝑥 − (1\(2*4))*x^2 + (1*3/(2*4*6))*𝑥^3 − ⋯ , где 𝑥 ∈ (−1; +1)
 	*/
-	int k;
+	int32_t k;
 	double x, eps, res = 1, el = 1;
 	while (true)
 	{
@@ -43,7 +43,7 @@ int main()
 		}
 	}
 	eps = pow(10, -k);
-	int i = 0;
+	int_32t i = 0;
 	el = x / 2;
 	while (abs(el) >= eps)
 	{
@@ -52,5 +52,5 @@ int main()
 		el = el * x * (0.5 - i) / (i + 1);
 	}
 	std::cout.precision(k);
-	std::cout << "Result: " << res << "\nStandart result: " << sqrt(x+1);
+	std::cout << "Result: " << res << '\n' << "Standart result: " << sqrt(x+1);
 }
