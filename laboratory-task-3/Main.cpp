@@ -1,8 +1,15 @@
 // Вариант 42
+/*
+В одномерном массиве, состоящем из п вещественных элементов, вычислить:
+- самую длинную цепочку подряд стоящих различных элементов;
+- сумму элементов массива, расположенных между первым и последним нулём.
+Упорядочить по возрастанию отдельно элементы, стоящие на четных местах, и элементы,
+стоящие на нечетных местах.
+*/
 #include <iostream>
 #include <ctime>
-void input_method_choose(bool input_method, double arr[], int lenght) {
-	if (input_method)
+void inputMethodChoose(bool inputMethod, double arr[], int lenght) {
+	if (inputMethod)
 	{
 		double a, b;
 		std::cout << "Input interval" << '\n' << "Input a: ";
@@ -24,34 +31,34 @@ void input_method_choose(bool input_method, double arr[], int lenght) {
 		}
 	}
 }
-void max_chain(double arr[], int lenght) {
-	int chain_max_length = 0;
+void maxChain(double arr[], int lenght) {
+	int chainMaxLength = 0;
 	for (int i = 0; i < lenght; ++i)
 	{
 		for (int j = i - 1; j >= 0; --j)
 		{
 			if (arr[i] == arr[j])
 			{
-				chain_max_length = std::max(chain_max_length, i - j);
+				chainMaxLength = std::max(chainMaxLength, i - j);
 				break;
 			}
 		}
 	}
-	if (chain_max_length == 0)
+	if (chainMaxLength == 0)
 	{
-		chain_max_length = lenght;
+		chainMaxLength = lenght;
 	}
-	std::cout << "Max lenght of chain = " << chain_max_length << '\n';
+	std::cout << "Max lenght of chain = " << chainMaxLength << '\n';
 }
 void zero(double arr[],int length)
 {
 	double sum = 0;
-	int start_0 = -1, end_0 = -1;
+	int startZero = -1, endZero = -1;
 	for (int i = 0; i < length; ++i)
 	{
 		if (!arr[i])
 		{
-			start_0 = i;
+			startZero = i;
 			break;
 		}
 	}
@@ -59,17 +66,17 @@ void zero(double arr[],int length)
 	{
 		if (!arr[i])
 		{
-			end_0 = i;
+			endZero = i;
 			break;
 		}
 	}
-	if (start_0 == -1 or end_0 == -1)
+	if (startZero == -1 or endZero == -1)
 	{
 		std::cout << "Not enough zeros!!!" << '\n';
 	}
 	else
 	{
-		for (int i = start_0 + 1; i < end_0; ++i)
+		for (int i = startZero + 1; i < endZero; ++i)
 		{
 			sum += arr[i];
 		}
@@ -78,8 +85,8 @@ void zero(double arr[],int length)
 }
 int main()
 {
-	int const LENGTH_0 = 10000;
-	double arr[LENGTH_0] = {};
+	int const LENGTHBASE = 10000;
+	double arr[LENGTHBASE] = {};
 	int n = 100002;
 	while (n > 10001)
 	{
@@ -89,7 +96,7 @@ int main()
 	std::cout << "Choose input method" << "\n1.From keyboard" << "\n2.Random elements\n";
 	uint8_t method;
 	std::cin >> method;
-	input_method_choose(--method, arr, n);
+	inputMethodChoose(--method, arr, n);
 	for (int i = 0; i < n; i += 2)
 	{
 		for (int j = i + 2; j < n; j += 2)
