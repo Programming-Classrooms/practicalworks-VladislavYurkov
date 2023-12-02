@@ -1,3 +1,7 @@
+#include <iostream>
+#include <ctime>
+
+
 // Вариант 42
 /*
 В одномерном массиве, состоящем из п вещественных элементов, вычислить:
@@ -6,9 +10,9 @@
 Упорядочить по возрастанию отдельно элементы, стоящие на четных местах, и элементы,
 стоящие на нечетных местах.
 */
-#include <iostream>
-#include <ctime>
-void inputMethodChoose(bool inputMethod, double arr[], int lenght) {
+
+
+void inputMethod(bool inputMethod, double arr[], int lenght) {
 	if (inputMethod)
 	{
 		double a, b;
@@ -31,7 +35,8 @@ void inputMethodChoose(bool inputMethod, double arr[], int lenght) {
 		}
 	}
 }
-void maxChain(double arr[], int lenght) {
+
+void maxChainOfDifferent(double arr[], int lenght) {
 	int chainMaxLength = 0;
 	for (int i = 0; i < lenght; ++i)
 	{
@@ -50,7 +55,8 @@ void maxChain(double arr[], int lenght) {
 	}
 	std::cout << "Max lenght of chain = " << chainMaxLength << '\n';
 }
-void zero(double arr[],int length)
+
+void sumBetweenZeros(double arr[],int length)
 {
 	double sum = 0;
 	int startZero = -1, endZero = -1;
@@ -83,6 +89,7 @@ void zero(double arr[],int length)
 		std::cout << "Sum of numbers between zeros = " << sum << '\n';
 	}
 }
+
 int main()
 {
 	int const LENGTHBASE = 10000;
@@ -93,10 +100,14 @@ int main()
 		std::cout << "Input number of real numbers: ";
 		std::cin >> n;
 	}
+
+
 	std::cout << "Choose input method" << "\n1.From keyboard" << "\n2.Random elements\n";
 	uint8_t method;
 	std::cin >> method;
-	inputMethodChoose(--method, arr, n);
+	inputMethod(--method, arr, n);
+
+
 	for (int i = 0; i < n; i += 2)
 	{
 		for (int j = i + 2; j < n; j += 2)
@@ -107,6 +118,8 @@ int main()
 			}
 		}
 	}
+
+
 	for (int i = 1; i < n; i += 2)
 	{
 		for (int j = i + 2; j < n; j += 2)
@@ -117,10 +130,14 @@ int main()
 			}
 		}
 	}
+
+
 	std::cout << "array:" << '\n';
 	for (int i = 0; i < n; ++i)
 	{
 		std::cout << arr[i] << '\n';
 	}
-	EXIT_SUCCESS;
+
+
+	return 0;
 }
