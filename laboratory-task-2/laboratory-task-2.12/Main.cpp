@@ -1,7 +1,15 @@
 #include <iostream>
+
+
+/*
+Написать программу, которая на заданном отрезке [a,b]
+натурального ряда чисел находит все числа Армстронга
+*/
+
+
 int main()
 {
-	unsigned long long a = 0, b = 0;
+	int64_t a = 0, b = 0;
 	while (a < 1)
 	{
 		std::cout << "Input a: ";
@@ -12,29 +20,33 @@ int main()
 		std::cout << "Input b: ";
 		std::cin >> b;
 	}
-	if (a > b) { a ^= b ^= a ^= b; }
+	if (a > b) { 
+		int64_t help = a;
+		a = b;
+		b = help;
+	}
 	{
-		short len;
-		uint64_t temp_num, sum;
-		for (int i = a; i <= b; ++i)
+		size_t length;
+		uint64_t tempNumber, sumOfDigits;
+		for (size_t i = a; i <= b; ++i)
 		{
-			len = 0;
-			temp_num = i, sum = 0;
-			while (temp_num)
+			length = 0;
+			tempNumber = i, sumOfDigits = 0;
+			while (tempNumber)
 			{
-				temp_num /= 10;
-				len++;
+				tempNumber /= 10;
+				length++;
 			}
-			temp_num = i;
-			for (int j = 0; j < len; ++j)
+			tempNumber = i;
+			for (size_t j = 0; j < length; ++j)
 			{
-				sum += pow(temp_num % 10, len);
-				temp_num /= 10;
+				sumOfDigits += pow(tempNumber % 10, length);
+				tempNumber /= 10;
 			}
-			if (sum == i) {
+			if (sumOfDigits == i) {
 				std::cout << i << std::endl;
 			}
 		}
 	}
-	EXIT_SUCCESS;
+	return 0;
 }

@@ -1,4 +1,12 @@
 #include <iostream>
+
+/*
+Написать программу, которая находит для заданного натурального
+N все пифагоровы тройки чисел, каждое из которых
+не превосходит N.
+*/
+
+
 int main()
 {
 	int n = 0;
@@ -7,6 +15,8 @@ int main()
 		std::cout << "Input natural n: ";
 		std::cin >> n;
 	}
+
+
 	for (int i = 3; i <= n; ++i)
 	{
 		for (int j = i + 1; j <= n; ++j)
@@ -20,4 +30,7 @@ int main()
 			}
 		}
 	}
+
+
+	return 0;
 }

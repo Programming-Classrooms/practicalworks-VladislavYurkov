@@ -1,37 +1,51 @@
 #include <iostream>
+
+/*
+Написать программу, которая находит в последовательности,
+состоящей из цифр подряд записанных натуральных чисел,
+цифру с заданным номером.
+*/
+
+
 int main()
 {
-	int T = 0;
+	int32_t T = 0;
 	while (T < 1)
 	{
 		std::cout << "Input T: ";
 		std::cin >> T;
 	}
-	int prim_1 = 0;
-	int prim_2 = -100;
-	for (int i = 2;T; ++i)
+
+
+	int32_t firstPrime = 0;
+	int32_t secondPrime = -100;
+	for (int32_t i = 2;T; ++i)
 	{
-		bool is_prime = true;
-		for (int j = 2; j <= sqrt(i); ++j)
+		bool isPrime = true;
+		for (int32_t j = 2; j <= sqrt(i); ++j)
 		{
 			if (!(i % j))
 			{
-				is_prime = false;
+				isPrime = false;
 			}
 		}
-		if (is_prime)
+
+
+		if (isPrime)
 		{
-			if (prim_1)
+			if (firstPrime)
 			{
-				prim_2 = prim_1;
+				secondPrime = firstPrime;
 			}
-			prim_1 = i;
-			if (prim_1 - prim_2 == 2)
+			firstPrime = i;
+			if (firstPrime - secondPrime == 2)
 			{
-				std::cout << prim_2 << " " << prim_1 << std::endl;
+				std::cout << secondPrime << " " << firstPrime << std::endl;
 				--T;
 			}
 		}
 	}
-	EXIT_SUCCESS;
+
+	
+	return 0;
 }

@@ -1,7 +1,16 @@
 #include <iostream>
+
+
+/*
+Написать программу, которая на заданном отрезке [a,b]
+натурального ряда чисел находит числа, десятичная запись
+которых есть строго возрастающая последовательность цифр
+*/
+
+
 int main()
 {
-	unsigned long long a = 0, b = 0;
+	int64_t a = 0, b = 0;
 	while (a < 1)
 	{
 		std::cout << "Input natural a: ";
@@ -12,33 +21,41 @@ int main()
 		std::cout << "Input natural b: ";
 		std::cin >> b;
 	}
-	if (a > b) { a ^= b ^= a ^= b; }
+	if (a > b) {
+		int64_t help = a;
+		a = b;
+		b = help;
+	}
 	{
 		short temp1 = 0, temp2 = 0;
-		bool first_iteration;
+		bool firstIteration;
 		for (int i = a; i <= b; i++)
 		{
-			first_iteration = true;
-			bool is_true = true;
+			firstIteration = true;
+			bool isTrue = true;
 			int num = i;
 			while (num > 0)
 			{
-				if (first_iteration) { temp1 = i % 10; first_iteration = false; }
-				else { temp1 = temp2; }
+				if (firstIteration) {
+					temp1 = i % 10; firstIteration = false; 
+				}
+				else {
+					temp1 = temp2;
+				}
 				num /= 10;
 				temp2 = num % 10;
 				if (temp1 <= temp2)
 				{
-					is_true = false;
+					isTrue = false;
 					break;
 				}
 			}
-			if (is_true)
+			if (isTrue)
 			{
 				std::cout << i << std::endl;
 			}
 
 		}
 	}
-	EXIT_SUCCESS;
+	return 0;
 }

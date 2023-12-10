@@ -1,18 +1,28 @@
 #include <iostream>
+
+
+/*
+Написать программу, которая для заданного натурального
+числа N находит, не превышающие это число дружественные
+*/
+
+
 int main()
 {
-	unsigned long long n = 0;
+	int64_t n = 0;
 	while (n < 1)
 	{
 		std::cout << "Input natural n: ";
 		std::cin >> n;
 	}
-	unsigned long long temp1,temp2;
-	for (unsigned long long i = 2; i <= n; ++i)
+
+
+	int64_t temp1,temp2;
+	for (int64_t i = 2; i <= n; ++i)
 	{
 		temp1 = i;
-		unsigned long long sum1 = 1, sum2 = 1; ;
-		for (unsigned long long j = 2; j < temp1; ++j)
+		int64_t sum1 = 1, sum2 = 1; ;
+		for (int64_t j = 2; j < temp1; ++j)
 		{
 			if (!(temp1 % j))
 			{
@@ -20,7 +30,7 @@ int main()
 			}
 		}
 		temp2 = sum1;
-		for (unsigned long long k = 2; k < temp2; ++k)
+		for (int64_t k = 2; k < temp2; ++k)
 		{
 			if (!(temp2 % k))
 			{
@@ -33,5 +43,5 @@ int main()
 		}
 
 	}
-	EXIT_SUCCESS;
+	return 0;
 }

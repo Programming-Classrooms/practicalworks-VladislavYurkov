@@ -1,27 +1,46 @@
 #include <iostream>
+
+
+/*
+Написать программу, которая для заданного натурального числа
+выполняет разложение числа на простые множители.
+*/
+
+
 int main()
 {
-	unsigned long long n = 0;
-	while (n < 1)
+	int64_t number = 0;
+	try
 	{
-		std::cout << "Input natural n: ";
-		std::cin >> n;
-	}
-	std::cout << n << " = ";
-	while (n > 1)
-	{
-		for (unsigned long long i = 2; i <= n;)
+		std::cout << "Input natural number: ";
+		std::cin >> number;
+		if (number < 1)
 		{
-			if (n % i)
+			throw "number is not natural";
+		}
+	}
+
+	catch (const char* e)
+	{
+		std::cout << e << '\n';
+	}
+
+
+	std::cout << number << " = ";
+	while (number > 1)
+	{
+		for (int64_t i = 2; i <= number;)
+		{
+			if (number % i)
 			{
 				++i;
 			}
 			else
 			{
-				n /= i;
-				if (n != 1)
+				number /= i;
+				if (number != 1)
 				{
-				std::cout << i << " * ";
+					std::cout << i << " * ";
 				}
 				else
 				{
@@ -31,5 +50,5 @@ int main()
 		}
 	}
 
-	EXIT_SUCCESS;
+	return 0;
 }
