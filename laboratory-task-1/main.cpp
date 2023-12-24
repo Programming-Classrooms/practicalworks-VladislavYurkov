@@ -24,7 +24,7 @@ int main()
         std::cin >> x;
         if (!(x > -1 && x < 1))
         {
-            throw "Wrong x";
+            throw std::runtime_error("Wrong x");
         }
 
         int64_t k;
@@ -32,7 +32,7 @@ int main()
         std::cin >> k;
         if (!(k > 1))
         {
-            throw "Wrong k";
+            throw std::runtime_error("Wrong k");
         }
 
         long double eps;
@@ -40,25 +40,30 @@ int main()
         std::cin >> eps;
         if (!(0 < eps && eps < pow(10,-k)))
         {
-            throw "Wrong epsilon";
+            throw std::runtime_error("Wrong epsilon");
         }
 
-        long double term = x / 2.0;
-        long double result = 1;
+        long double taylorSeriesMember = x / 2.0;
+        long double taylorSeriesResult = 1;
         size_t i = 1;
-        while (fabs(term) > eps)
+        while (fabs(taylorSeriesMember) > eps)
         {
-            result += term;
-            term *= -x * i / (i+3);
+            taylorSeriesResult += taylorSeriesMember;
+            taylorSeriesMember *= -x * i / (i+3);
             i += 2; 
         }
         
-        std::cout << "Taylor series result: " << std::fixed << std::setprecision(k) << result << '\n';
+        std::cout << "Taylor series result: " << std::fixed << std::setprecision(k) << taylorSeriesResult << '\n';
         std::cout << "Standart function result: " << sqrt(1.0 + x);
     }
-    catch(const char* e)
+    catch(std::runtime_error e)
     {
-        std::cerr << e << '\n';
+        /*
+            Использую runtime_error потому что exception не имеет конструктора связанного с char*
+            Подробнее:
+            https://stackoverflow.com/questions/28640553/exception-class-with-a-char-constructor
+        */
+        std::cerr << e.what() << '\n';
     }
 
     return 0;
