@@ -17,7 +17,7 @@ double randomDouble(double lowerBorder, double upperBorder)
 	return lowerBorder + rand() * (upperBorder - lowerBorder) / RAND_MAX;
 }
 
-void inputMethod(bool inputMethod, double arr[], size_t lenght) 
+void arrayFill(bool inputMethod, double arr[], size_t lenght) 
 {
 	if (inputMethod) {
 		double a, b;
@@ -76,14 +76,27 @@ void sumBetweenZeros(double arr[],int length)
 		}
 	}
 
-	if (!(startZero != -1 && endZero != -1)){
-		std::cout << "Not enough zeros!!!" << '\n';
+	if (!(startZero != -1 && endZero != -1)) {
+		if (startZero == -1 && endZero == -1) {
+			std::cout << "There are no zeros\n";
+		}
+		else {
+			std::cout << "There are only one zero\n";
+		}
 	}
 	else {
 		for (size_t i = startZero + 1; i < endZero; ++i) {
 			sum += arr[i];
 		}
 		std::cout << "Sum of numbers between zeros = " << sum << '\n';
+	}
+}
+
+void bubbleSort(double& a, double& b)
+{
+	if (a > b)
+	{
+		std::swap(a, b);
 	}
 }
 
@@ -97,42 +110,39 @@ int main()
 		std::cout << "Input number of real numbers: ";
 		std::cin >> lenght;
 	}
+	try{
+		std::cout << "Choose input method" << "\n1.From keyboard" << "\n2.Random elements\n";
+		uint8_t method;
+		std::cin >> method;
+		if (--method > 1){
+			throw std::runtime_error("Wrong input method");
+		}
+		inputMethod(--method, arr, lenght);
 
-	std::cout << "Choose input method" << "\n1.From keyboard" << "\n2.Random elements\n";
-	uint8_t method;
-	std::cin >> method;
-	inputMethod(--method, arr, lenght);
-
-
-	for (size_t i = 0; i < lenght; i += 2)
-	{
-		for (size_t j = i + 2; j < lenght; j += 2)
+		for (size_t i = 0; i < lenght; i += 2)
 		{
-			if (arr[i] > arr[j])
+			for (size_t j = i + 2; j < lenght; j += 2)
 			{
-				std::swap(arr[i], arr[j]);
+				bubbleSort(arr[i], arr[j]);
 			}
 		}
-	}
 
-
-	for (size_t i = 1; i < lenght; i += 2)
-	{
-		for (size_t j = i + 2; j < lenght; j += 2)
+		for (size_t i = 1; i < lenght; i += 2)
 		{
-			if (arr[i] > arr[j])
+			for (size_t j = i + 2; j < lenght; j += 2)
 			{
-				std::swap(arr[i], arr[j]);
+				bubbleSort(arr[i], arr[j]);
 			}
 		}
-	}
 
+		std::cout << "array:" << '\n';
+		for (int i = 0; i < lenght; ++i)
+		{
+			std::cout << arr[i] << '\n';
+		}
 
-	std::cout << "array:" << '\n';
-	for (int i = 0; i < lenght; ++i)
-	{
-		std::cout << arr[i] << '\n';
 	}
+	
 
 
 	return 0;
