@@ -105,45 +105,39 @@ int main()
 	size_t const LENGTHBASE = 10000;
 	double arr[LENGTHBASE] = {};
 	size_t lenght = 100002;
-	while (lenght > 10001)
-	{
+	while (lenght > 10001){
 		std::cout << "Input number of real numbers: ";
 		std::cin >> lenght;
 	}
-	try{
+	try {
 		std::cout << "Choose input method" << "\n1.From keyboard" << "\n2.Random elements\n";
 		uint8_t method;
 		std::cin >> method;
-		if (--method > 1){
+		if (--method > 1) {
 			throw std::runtime_error("Wrong input method");
 		}
 		inputMethod(--method, arr, lenght);
 
-		for (size_t i = 0; i < lenght; i += 2)
-		{
-			for (size_t j = i + 2; j < lenght; j += 2)
-			{
+		for (size_t i = 0; i < lenght; i += 2) {
+			for (size_t j = i + 2; j < lenght; j += 2) {
 				bubbleSort(arr[i], arr[j]);
 			}
 		}
 
-		for (size_t i = 1; i < lenght; i += 2)
-		{
-			for (size_t j = i + 2; j < lenght; j += 2)
-			{
+		for (size_t i = 1; i < lenght; i += 2) {
+			for (size_t j = i + 2; j < lenght; j += 2) {
 				bubbleSort(arr[i], arr[j]);
 			}
 		}
 
 		std::cout << "array:" << '\n';
-		for (int i = 0; i < lenght; ++i)
-		{
+		for (int i = 0; i < lenght; ++i){
 			std::cout << arr[i] << '\n';
 		}
 
 	}
-	
-
-
+	catch (std::runtime_error e) {
+		std::cout e.what() << '\n';
+	}
 	return 0;
 }
