@@ -1,56 +1,52 @@
+// Вариант 42
+/*
+	В одномерном массиве, состоящем из п вещественных элементов, вычислить:
+	- самую длинную цепочку подряд стоящих различных элементов;
+	- сумму элементов массива, расположенных между первым и последним нулём.
+	Упорядочить по возрастанию отдельно элементы, стоящие на четных местах, и элементы,
+	стоящие на нечетных местах.
+*/
+
+
 #include <iostream>
 #include <ctime>
 
 
-// Вариант 42
-/*
-В одномерном массиве, состоящем из п вещественных элементов, вычислить:
-- самую длинную цепочку подряд стоящих различных элементов;
-- сумму элементов массива, расположенных между первым и последним нулём.
-Упорядочить по возрастанию отдельно элементы, стоящие на четных местах, и элементы,
-стоящие на нечетных местах.
-*/
-
-
-void inputMethod(bool inputMethod, double arr[], int lenght) {
-	if (inputMethod)
-	{
+void inputMethod(bool inputMethod, double arr[], size_t lenght) 
+{
+	if (inputMethod) {
 		double a, b;
 		std::cout << "Input interval" << '\n' << "Input a: ";
 		std::cin >> a;
 		std::cout << "Input b: ";
 		std::cin >> b;
-		if (a > b) { std::swap(a, b); }
-		for (int i = 0; i < lenght; ++i)
-		{
+		if (a > b) {
+			std::swap(a, b);
+		}
+		for (size_t i = 0; i < lenght; ++i) {
 			arr[i] = a + rand() * (b - a) / RAND_MAX;
 		}
 	}
-	else
-	{
+	else {
 		std::cout << "Input " << lenght << " real numbers" << '\n';
-		for (int i = 0; i < lenght; ++i)
-		{
+		for (size_t i = 0; i < lenght; ++i) {
 			std::cin >> arr[i];
 		}
 	}
 }
 
-void maxChainOfDifferent(double arr[], int lenght) {
-	int chainMaxLength = 0;
-	for (int i = 0; i < lenght; ++i)
-	{
-		for (int j = i - 1; j >= 0; --j)
-		{
-			if (arr[i] == arr[j])
-			{
+void maxChainOfDifferent(double arr[], size_t lenght) {
+	size_t chainMaxLength = 0;
+	for (size_t i = 0; i < lenght; ++i) {
+		for (size_t j = i - 1; j >= 0; --j) {
+			if (arr[i] == arr[j]) {
 				chainMaxLength = std::max(chainMaxLength, i - j);
 				break;
 			}
 		}
 	}
-	if (chainMaxLength == 0)
-	{
+
+	if (chainMaxLength == 0) {
 		chainMaxLength = lenght;
 	}
 	std::cout << "Max lenght of chain = " << chainMaxLength << '\n';
@@ -59,31 +55,27 @@ void maxChainOfDifferent(double arr[], int lenght) {
 void sumBetweenZeros(double arr[],int length)
 {
 	double sum = 0;
-	int startZero = -1, endZero = -1;
-	for (int i = 0; i < length; ++i)
-	{
+	size_t startZero = -1;
+	size_t endZero = -1;
+	for (int i = 0; i < length; ++i) {
 		if (!arr[i])
 		{
 			startZero = i;
 			break;
 		}
 	}
-	for (int i = length - 1; i >= 0; --i)
-	{
-		if (!arr[i])
-		{
+	for (int i = length - 1; i >= 0; --i) {
+		if (!arr[i]) {
 			endZero = i;
 			break;
 		}
 	}
-	if (startZero == -1 or endZero == -1)
-	{
+
+	if (!(startZero != -1 && endZero != -1)){
 		std::cout << "Not enough zeros!!!" << '\n';
 	}
-	else
-	{
-		for (int i = startZero + 1; i < endZero; ++i)
-		{
+	else {
+		for (size_t i = startZero + 1; i < endZero; ++i) {
 			sum += arr[i];
 		}
 		std::cout << "Sum of numbers between zeros = " << sum << '\n';
@@ -92,25 +84,24 @@ void sumBetweenZeros(double arr[],int length)
 
 int main()
 {
-	int const LENGTHBASE = 10000;
+	size_t const LENGTHBASE = 10000;
 	double arr[LENGTHBASE] = {};
-	int n = 100002;
-	while (n > 10001)
+	size_t lenght = 100002;
+	while (lenght > 10001)
 	{
 		std::cout << "Input number of real numbers: ";
-		std::cin >> n;
+		std::cin >> lenght;
 	}
-
 
 	std::cout << "Choose input method" << "\n1.From keyboard" << "\n2.Random elements\n";
 	uint8_t method;
 	std::cin >> method;
-	inputMethod(--method, arr, n);
+	inputMethod(--method, arr, lenght);
 
 
-	for (int i = 0; i < n; i += 2)
+	for (size_t i = 0; i < lenght; i += 2)
 	{
-		for (int j = i + 2; j < n; j += 2)
+		for (size_t j = i + 2; j < lenght; j += 2)
 		{
 			if (arr[i] > arr[j])
 			{
@@ -120,9 +111,9 @@ int main()
 	}
 
 
-	for (int i = 1; i < n; i += 2)
+	for (size_t i = 1; i < lenght; i += 2)
 	{
-		for (int j = i + 2; j < n; j += 2)
+		for (size_t j = i + 2; j < lenght; j += 2)
 		{
 			if (arr[i] > arr[j])
 			{
@@ -133,7 +124,7 @@ int main()
 
 
 	std::cout << "array:" << '\n';
-	for (int i = 0; i < n; ++i)
+	for (int i = 0; i < lenght; ++i)
 	{
 		std::cout << arr[i] << '\n';
 	}
