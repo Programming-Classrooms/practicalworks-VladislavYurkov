@@ -1,12 +1,12 @@
+/*
+	Написать программу, которая для заданного натурального числа
+	добавляет слева и справа в записи числа цифру, повторяющуюся
+	максимальное число раз
+*/
+
+
 #include <iostream>
 #include <cmath>
-
-
-/*
-Написать программу, которая для заданного натурального числа
-добавляет слева и справа в записи числа цифру, повторяющуюся
-максимальное число раз
-*/
 
 
 int main()
@@ -21,7 +21,6 @@ int main()
 		{
 			throw "n isn't natural";
 		}
-
 
 		int16_t maxCount = 0;
 		int16_t maxDigit = 0;
@@ -60,19 +59,16 @@ int main()
 		{
 			throw "The most often number is zero";
 		}
+
 		number += maxDigit * pow(10, numberLength);
 		number *= 10;
 		number += maxDigit;
 
 		std::cout << "Modified number: " << number << '\n';
 	}
-
-	
 	catch (const char* e)
 	{
 		std::cout << e << '\n';
 	}
-
-
 	return 0;
 }

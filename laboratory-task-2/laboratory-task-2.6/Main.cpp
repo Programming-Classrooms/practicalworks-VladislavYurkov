@@ -1,10 +1,10 @@
-#include <iostream>
-
-
 /*
-Написать программу, которая для заданного натурального числа
-выполняет разложение числа на простые множители.
+	Написать программу, которая для заданного натурального числа
+	выполняет разложение числа на простые множители.
 */
+
+
+#include <iostream>
 
 
 int main()
@@ -16,13 +16,13 @@ int main()
 		std::cin >> number;
 		if (number < 1)
 		{
-			throw "number is not natural";
+			throw std::runtime_error("Number is not natural");
 		}
 	}
 
-	catch (const char* e)
+	catch (std::runtime_error e)
 	{
-		std::cout << e << '\n';
+		std::cerr << e.what() << '\n';
 	}
 
 

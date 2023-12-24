@@ -1,10 +1,10 @@
-#include <iostream>
-
-
 /*
 Написать программу, которая для заданного натурального
 числа N находит, не превышающие это число дружественные
 */
+
+
+#include <iostream>
 
 
 int main()
@@ -17,29 +17,30 @@ int main()
 	}
 
 
-	int64_t temp1,temp2;
+	int64_t firstPrimary;
+	int64_t secondPrimary;
 	for (int64_t i = 2; i <= n; ++i)
 	{
-		temp1 = i;
-		int64_t sum1 = 1, sum2 = 1; ;
-		for (int64_t j = 2; j < temp1; ++j)
+		firstPrimary = i;
+		int64_t sumOfDevidersOfFirstPrimary = 1, sumOfDevidersOfSecondPrimary = 1; ;
+		for (int64_t j = 2; j < firstPrimary; ++j)
 		{
-			if (!(temp1 % j))
+			if (!(firstPrimary % j))
 			{
-				sum1 += j;
+				sumOfDevidersOfFirstPrimary += j;
 			}
 		}
-		temp2 = sum1;
-		for (int64_t k = 2; k < temp2; ++k)
+		secondPrimary = sumOfDevidersOfFirstPrimary;
+		for (int64_t k = 2; k < secondPrimary; ++k)
 		{
-			if (!(temp2 % k))
+			if (!(secondPrimary % k))
 			{
-				sum2 += k;
+				sumOfDevidersOfSecondPrimary += k;
 			}
 		}
-		if (sum2 == temp1 && temp1 < temp2)
+		if (sumOfDevidersOfSecondPrimary == firstPrimary && firstPrimary < secondPrimary)
 		{
-			std::cout << temp1 << " and " << temp2 << std::endl;
+			std::cout << firstPrimary << " and " << secondPrimary << std::endl;
 		}
 
 	}
