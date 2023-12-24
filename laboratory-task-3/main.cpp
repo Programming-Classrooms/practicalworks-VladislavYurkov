@@ -101,6 +101,29 @@ void bubbleSort(double& a, double& b)
 	}
 }
 
+void printArray(double arr[], size_t length)
+{
+	std::cout << "array:" << '\n';
+	for (size_t i = 0; i < length; ++i){
+		std::cout << arr[i] << '\n';
+	}
+}
+
+void sortOddAndEvenPositions(double arr[], size_t length)
+{
+	for (size_t i = 0; i < length; i += 2) {
+			for (size_t j = i + 2; j < length; j += 2) {
+				bubbleSort(arr[i], arr[j]);
+			}
+		}
+
+		for (size_t i = 1; i < length; i += 2) {
+			for (size_t j = i + 2; j < length; j += 2) {
+				bubbleSort(arr[i], arr[j]);
+			}
+		}
+}
+
 int main()
 {
 	size_t const LENGTHBASE = 10000;
@@ -117,28 +140,16 @@ int main()
 		if (method != 1 && method != 2) {
 			throw std::runtime_error("Wrong input method");
 		}
+		
 		arrayFill(--method, arr, length);
 
 		maxChainOfDifferentOut(arr, length);
 
 		sumBetweenZerosOut(arr, length);
 
-		for (size_t i = 0; i < length; i += 2) {
-			for (size_t j = i + 2; j < length; j += 2) {
-				bubbleSort(arr[i], arr[j]);
-			}
-		}
+		sortOddAndEvenPositions(arr, length);
 
-		for (size_t i = 1; i < length; i += 2) {
-			for (size_t j = i + 2; j < length; j += 2) {
-				bubbleSort(arr[i], arr[j]);
-			}
-		}
-
-		std::cout << "array:" << '\n';
-		for (int i = 0; i < length; ++i){
-			std::cout << arr[i] << '\n';
-		}
+		printArray(arr, length);
 
 	}
 	catch (std::runtime_error e) {
