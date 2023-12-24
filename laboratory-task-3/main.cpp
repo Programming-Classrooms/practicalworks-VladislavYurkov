@@ -10,6 +10,7 @@
 
 #include <iostream>
 #include <ctime>
+#include <cstdint>
 
 
 double randomDouble(double lowerBorder, double upperBorder)
@@ -17,7 +18,7 @@ double randomDouble(double lowerBorder, double upperBorder)
 	return lowerBorder + rand() * (upperBorder - lowerBorder) / RAND_MAX;
 }
 
-void arrayFill(bool inputMethod, double arr[], size_t lenght) 
+void arrayFill(bool inputMethod, double arr[], size_t length) 
 {
 	if (inputMethod) {
 		double a, b;
@@ -28,22 +29,22 @@ void arrayFill(bool inputMethod, double arr[], size_t lenght)
 		if (a > b) {
 			std::swap(a, b);
 		}
-		for (size_t i = 0; i < lenght; ++i) {
+		for (size_t i = 0; i < length; ++i) {
 			arr[i] = randomDouble(a, b);
 		}
 	}
 	else {
-		std::cout << "Input " << lenght << " real numbers" << '\n';
-		for (size_t i = 0; i < lenght; ++i) {
+		std::cout << "Input " << length << " real numbers" << '\n';
+		for (size_t i = 0; i < length; ++i) {
 			std::cin >> arr[i];
 		}
 	}
 }
 
-void maxChainOfDifferent(double arr[], size_t lenght) {
+void maxChainOfDifferentOut(double arr[], size_t length) {
 	size_t chainMaxLength = 0;
-	for (size_t i = 0; i < lenght; ++i) {
-		for (size_t j = i - 1; j >= 0; --j) {
+	for (size_t i = 0; i < length; ++i) {
+		for (size_t j = 0; j < i; ++j) {
 			if (arr[i] == arr[j]) {
 				chainMaxLength = std::max(chainMaxLength, i - j);
 				break;
@@ -52,12 +53,12 @@ void maxChainOfDifferent(double arr[], size_t lenght) {
 	}
 
 	if (chainMaxLength == 0) {
-		chainMaxLength = lenght;
+		chainMaxLength = length;
 	}
-	std::cout << "Max lenght of chain = " << chainMaxLength << '\n';
+	std::cout << "Max length of chain = " << chainMaxLength << '\n';
 }
 
-void sumBetweenZeros(double arr[],int length)
+void sumBetweenZerosOut(double arr[],int length)
 {
 	double sum = 0;
 	size_t startZero = -1;
@@ -104,40 +105,44 @@ int main()
 {
 	size_t const LENGTHBASE = 10000;
 	double arr[LENGTHBASE] = {};
-	size_t lenght = 100002;
-	while (lenght > 10001){
+	size_t length = 100002;
+	while (length > 10001){
 		std::cout << "Input number of real numbers: ";
-		std::cin >> lenght;
+		std::cin >> length;
 	}
 	try {
 		std::cout << "Choose input method" << "\n1.From keyboard" << "\n2.Random elements\n";
-		uint8_t method;
+		size_t method;
 		std::cin >> method;
-		if (--method > 1) {
+		if (method != 1 && method != 2) {
 			throw std::runtime_error("Wrong input method");
 		}
-		inputMethod(--method, arr, lenght);
+		arrayFill(--method, arr, length);
 
-		for (size_t i = 0; i < lenght; i += 2) {
-			for (size_t j = i + 2; j < lenght; j += 2) {
+		maxChainOfDifferentOut(arr, length);
+
+		sumBetweenZerosOut(arr, length);
+
+		for (size_t i = 0; i < length; i += 2) {
+			for (size_t j = i + 2; j < length; j += 2) {
 				bubbleSort(arr[i], arr[j]);
 			}
 		}
 
-		for (size_t i = 1; i < lenght; i += 2) {
-			for (size_t j = i + 2; j < lenght; j += 2) {
+		for (size_t i = 1; i < length; i += 2) {
+			for (size_t j = i + 2; j < length; j += 2) {
 				bubbleSort(arr[i], arr[j]);
 			}
 		}
 
 		std::cout << "array:" << '\n';
-		for (int i = 0; i < lenght; ++i){
+		for (int i = 0; i < length; ++i){
 			std::cout << arr[i] << '\n';
 		}
 
 	}
 	catch (std::runtime_error e) {
-		std::cout e.what() << '\n';
+		std::cout << e.what() << '\n';
 	}
 	return 0;
 }
