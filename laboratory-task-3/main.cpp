@@ -12,6 +12,11 @@
 #include <ctime>
 
 
+double randomDouble(double lowerBorder, double upperBorder)
+{
+	return lowerBorder + rand() * (upperBorder - lowerBorder) / RAND_MAX;
+}
+
 void inputMethod(bool inputMethod, double arr[], size_t lenght) 
 {
 	if (inputMethod) {
@@ -24,7 +29,7 @@ void inputMethod(bool inputMethod, double arr[], size_t lenght)
 			std::swap(a, b);
 		}
 		for (size_t i = 0; i < lenght; ++i) {
-			arr[i] = a + rand() * (b - a) / RAND_MAX;
+			arr[i] = randomDouble(a, b);
 		}
 	}
 	else {
