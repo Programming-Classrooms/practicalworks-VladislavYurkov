@@ -13,8 +13,6 @@
 #include <iostream>
 #include <iomanip>
 #include <cmath>
-using std::cout;
-using std::cin;
 
 
 int main()
@@ -22,24 +20,24 @@ int main()
     try
     {
         double x;
-        cout << "Input x that belongs to the interval (-1; 1): ";
-        cin >> x;
+        std::cout << "Input x that belongs to the interval (-1; 1): ";
+        std::cin >> x;
         if (!(x > -1 && x < 1))
         {
             throw "Wrong x";
         }
 
         int64_t k;
-        cout << "Input natural k: ";
-        cin >> k;
+        std::cout << "Input natural k: ";
+        std::cin >> k;
         if (!(k > 1))
         {
             throw "Wrong k";
         }
 
         long double eps;
-        cout << "Input epsilon: ";
-        cin >> eps;
+        std::cout << "Input epsilon: ";
+        std::cin >> eps;
         if (!(0 < eps && eps < pow(10,-k)))
         {
             throw "Wrong epsilon";
@@ -55,13 +53,13 @@ int main()
             i += 2; 
         }
         
-        cout << "Taylor series result: " << std::fixed << std::setprecision(k) << result << '\n';
-        cout << "Standart function result: " << sqrt(1.0 + x);
+        std::cout << "Taylor series result: " << std::fixed << std::setprecision(k) << result << '\n';
+        std::cout << "Standart function result: " << sqrt(1.0 + x);
     }
     catch(const char* e)
     {
-        cout << e << '\n';
+        std::cerr << e << '\n';
     }
-        
+
     return 0;
 }
