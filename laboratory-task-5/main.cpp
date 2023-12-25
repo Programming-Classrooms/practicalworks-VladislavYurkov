@@ -44,7 +44,14 @@ double thirdFunction(double x)
     return sin(0.4 * x) * pow(x, 0.23);
 }
 
-double rightRectangleIntegral(size_t numberOfFunction, double leftBorder, double rightBorder, double eps, uint64_t& n)
+double rightRectangleIntegral
+(
+    size_t numberOfFunction,
+    double leftBorder, 
+    double rightBorder, 
+    double eps, 
+    uint64_t& n
+)
 {
     double (*function) (double) = nullptr;
     switch(numberOfFunction) {
@@ -63,11 +70,15 @@ double rightRectangleIntegral(size_t numberOfFunction, double leftBorder, double
     }
 
     n = 4;
+    double x = leftBorder;
+    
     double firstApprox = 0;
     double secondApprox = 0;
     double deltaX = (rightBorder - leftBorder) / static_cast<double>(n);
+
     for (size_t i = 0; i < n; ++i) {
-        firstApprox += function(leftBorder + static_cast<double>(i+1) * deltaX) * deltaX;
+        x += deltaX;
+        firstApprox += function(x) * deltaX;
     }
 
     while (fabs(firstApprox - secondApprox) >= eps) {
@@ -76,8 +87,65 @@ double rightRectangleIntegral(size_t numberOfFunction, double leftBorder, double
 
         secondApprox = firstApprox;
         firstApprox = 0;
+        x = leftBorder;
+
         for (size_t i = 0; i < n; ++i) {
-            firstApprox += function(leftBorder + static_cast<double>(i+1) * deltaX) * deltaX;
+            x += deltaX;
+            firstApprox += function(x) * deltaX;
+        }
+    }
+    
+    return firstApprox;
+}
+
+double trapezoidIntegral
+(
+    size_t numberOfFunction,
+    double leftBorder, 
+    double rightBorder, 
+    double eps, 
+    uint64_t& n
+)
+{
+    double (*function) (double) = nullptr;
+    switch(numberOfFunction) {
+        case 1: {
+            function = firstFunction;
+            break;
+        }
+        case 2: {
+            function = secondFunction;
+            break;
+        }
+        case 3: {
+            function = thirdFunction;
+            break;
+        }
+    }
+
+    n = 4;
+    double x = leftBorder;
+
+    double firstApprox = 0;
+    double secondApprox = 0;
+    double deltaX = (rightBorder - leftBorder) / static_cast<double>(n);
+
+    for (size_t i = 0; i < n; ++i) {
+        firstApprox += (function(x) + function(x + deltaX)) / 2 * deltaX;
+        x += deltaX;
+    }
+
+    while (fabs(firstApprox - secondApprox) >= eps) {
+        n *= 2;
+        deltaX = (rightBorder - leftBorder) / static_cast<double>(n);
+
+        secondApprox = firstApprox;
+        firstApprox = 0;
+        x = leftBorder;
+
+        for (size_t i = 0; i < n; ++i) {
+            firstApprox += (function(x) + function(x + deltaX)) / 2 * deltaX;
+            x += deltaX;
         }
     }
     
