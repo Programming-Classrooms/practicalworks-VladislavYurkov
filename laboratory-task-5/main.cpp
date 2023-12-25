@@ -44,6 +44,23 @@ double thirdFunction(double x)
     return sin(0.4 * x) * pow(x, 0.23);
 }
 
+size_t inputFunctionToIntegrate()
+{
+    std::string numberOfFunction = "";
+    std::cout << "Choose function to integrate\n";
+    std::cout << "1. 1 / (x ^ 3)\n";
+    std::cout << "2. (e ^ (0.1x)) / x\n";
+    std::cout << "3. sin(0.4x) * (x ^ 0.23)\n";
+    getline(std::cin, numberOfFunction);
+
+    if (!(numberOfFunction[0] > '0' && numberOfFunction[0] < '4' && numberOfFunction[1] == '\0'))
+    {
+        throw std::runtime_error("Wrong function");
+    }
+    return stoull(numberOfFunction);
+
+}
+
 double rightRectangleIntegral
 (
     size_t numberOfFunction,
@@ -152,8 +169,14 @@ double trapezoidIntegral
     return firstApprox;
 }
 
+
 int main()
 {
-    uint64_t n = 4;
-    return 0;
+    try {
+        uint64_t n = 4;
+        return 0;
+    }
+    catch(std::runtime_error e) {
+        std::cerr << e.what() << '\n';
+    }
 }
