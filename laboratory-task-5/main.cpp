@@ -61,6 +61,14 @@ size_t inputFunctionToIntegrate()
 
 }
 
+void setBorders(double& leftBorder, double& rightBorder)
+{
+    std::cout << "Input left border\n";
+    std::cin >> leftBorder;
+    std::cout << "Input right border\n";
+    std::cin >> rightBorder
+}
+
 double rightRectangleIntegral
 (
     size_t numberOfFunction,
@@ -174,6 +182,9 @@ int main()
 {
     try {
         uint64_t n = 4;
+        double rightBorder = 0;
+        double leftBorder = 0;
+
         return 0;
     }
     catch(std::runtime_error e) {
