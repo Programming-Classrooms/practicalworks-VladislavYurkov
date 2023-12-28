@@ -78,6 +78,11 @@ double rightRectangleIntegral
     uint64_t& n
 )
 {
+    if (rightBorder == leftBorder)
+    {
+        return 0.0;
+    }
+
     double (*function) (double) = nullptr;
     switch(numberOfFunction) {
         case 1: {
@@ -132,6 +137,11 @@ double trapezoidIntegral
     uint64_t& n
 )
 {
+    if (rightBorder == leftBorder)
+    {
+        return 0.0;
+    }
+
     double (*function) (double) = nullptr;
     switch(numberOfFunction) {
         case 1: {
@@ -184,6 +194,9 @@ int main()
         uint64_t n = 4;
         double rightBorder = 0;
         double leftBorder = 0;
+
+        inputFunctionToIntegrate();
+        setBorders(rightBorder, leftBorder);
 
         return 0;
     }
