@@ -28,6 +28,7 @@
 #include <cmath>
 #include <cstdint>
 #include <math.h>
+#include <iomanip>
 
 
 double firstFunction(double x)
@@ -68,6 +69,15 @@ void setBorders(double& leftBorder, double& rightBorder)
     std::cin >> leftBorder;
     std::cout << "Input right border\n";
     std::cin >> rightBorder;
+}
+
+void setAccuracy(double &eps, size_t& accuracy)
+{
+    std::cout << "Input epsilon\n";
+    std::cin >> eps;
+    std::string epsString = std::to_string(eps);
+    size_t pointIndex = epsString.find('.');
+    accuracy = epsString.size() - 1 - pointIndex;
 }
 
 double rightRectangleIntegral
@@ -235,11 +245,15 @@ int main()
         uint64_t n = 4;
         double rightBorder = 0;
         double leftBorder = 0;
+        double eps = 0;
+        size_t accuracy = 0;
 
         uint64_t numberOfFunction = inputFunctionToIntegrate();
-        setBorders(rightBorder, leftBorder);
-
-        std::cout << trapezoidIntegral(numberOfFunction, leftBorder, rightBorder, 0.0000001, n);
+        setBorders(leftBorder, rightBorder);
+        setAccuracy(eps, accuracy);
+        
+        std::cout << "Value of integral:\n";
+        std::cout << std::setprecision(accuracy) << trapezoidIntegral(numberOfFunction, leftBorder, rightBorder, eps, n);
         return 0;
     }
     catch(std::runtime_error e) {
