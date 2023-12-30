@@ -251,9 +251,11 @@ int main()
         uint64_t numberOfFunction = inputFunctionToIntegrate();
         setBorders(leftBorder, rightBorder);
         setAccuracy(eps, accuracy);
-        
-        std::cout << "Value of integral:\n";
-        std::cout << std::setprecision(accuracy) << trapezoidIntegral(numberOfFunction, leftBorder, rightBorder, eps, n);
+
+        std::cout << "Value of integral (Right rectangle method)\n";
+        std::cout << std::setprecision(accuracy) << rightRectangleIntegral(numberOfFunction, leftBorder, rightBorder, eps, n) << '\n';
+        std::cout << "Value of integral (Trapezoid method)\n";
+        std::cout << std::setprecision(accuracy) << trapezoidIntegral(numberOfFunction, leftBorder, rightBorder, eps, n) << '\n';
         return 0;
     }
     catch(std::runtime_error e) {
