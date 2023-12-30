@@ -27,6 +27,7 @@
 #include <iostream>
 #include <cmath>
 #include <cstdint>
+#include <math.h>
 
 
 double firstFunction(double x)
@@ -66,7 +67,7 @@ void setBorders(double& leftBorder, double& rightBorder)
     std::cout << "Input left border\n";
     std::cin >> leftBorder;
     std::cout << "Input right border\n";
-    std::cin >> rightBorder
+    std::cin >> rightBorder;
 }
 
 double rightRectangleIntegral
@@ -108,7 +109,12 @@ double rightRectangleIntegral
 
     for (size_t i = 0; i < n; ++i) {
         x += deltaX;
-        firstApprox += function(x) * deltaX;
+        double functionValue = function(x);
+        if(!(!isinf(functionValue) && !isnan(functionValue)))
+        {
+            continue;
+        }
+        firstApprox += functionValue * deltaX;
     }
 
     while (fabs(firstApprox - secondApprox) >= eps) {
@@ -121,7 +127,12 @@ double rightRectangleIntegral
 
         for (size_t i = 0; i < n; ++i) {
             x += deltaX;
-            firstApprox += function(x) * deltaX;
+            double functionValue = function(x);
+            if(!(!isinf(functionValue) && !isnan(functionValue)))
+            {
+                continue;
+            }
+            firstApprox += functionValue * deltaX;
         }
     }
     
@@ -165,8 +176,24 @@ double trapezoidIntegral
     double secondApprox = 0;
     double deltaX = (rightBorder - leftBorder) / static_cast<double>(n);
 
+    double functionValue = 0;
+    double functionDeltaValue = 0;
     for (size_t i = 0; i < n; ++i) {
-        firstApprox += (function(x) + function(x + deltaX)) / 2 * deltaX;
+        functionValue = function(x);
+        functionDeltaValue = function(x + deltaX);
+
+        if(!(!isinf(functionValue) && !isnan(functionValue)))
+        {
+            x += deltaX;
+            continue;
+        }
+        if(!(!isinf(functionDeltaValue) && !isnan(functionDeltaValue)))
+        {
+            x += deltaX;
+            continue;
+        }
+
+        firstApprox += (functionValue + functionDeltaValue) / 2.0 * deltaX;
         x += deltaX;
     }
 
@@ -179,7 +206,21 @@ double trapezoidIntegral
         x = leftBorder;
 
         for (size_t i = 0; i < n; ++i) {
-            firstApprox += (function(x) + function(x + deltaX)) / 2 * deltaX;
+            functionValue = function(x);
+            functionDeltaValue = function(x + deltaX);
+
+            if(!(!isinf(functionValue) && !isnan(functionValue)))
+            {
+                x += deltaX;
+                continue;
+            }
+            if(!(!isinf(functionDeltaValue) && !isnan(functionDeltaValue)))
+            {
+                x += deltaX;
+                continue;
+            }
+
+            firstApprox += (functionValue + functionDeltaValue) / 2.0 * deltaX;
             x += deltaX;
         }
     }
@@ -195,9 +236,10 @@ int main()
         double rightBorder = 0;
         double leftBorder = 0;
 
-        inputFunctionToIntegrate();
+        uint64_t numberOfFunction = inputFunctionToIntegrate();
         setBorders(rightBorder, leftBorder);
 
+        std::cout << trapezoidIntegral(numberOfFunction, leftBorder, rightBorder, 0.0000001, n);
         return 0;
     }
     catch(std::runtime_error e) {
