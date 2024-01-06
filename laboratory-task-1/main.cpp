@@ -38,18 +38,18 @@ int main()
         long double eps;
         std::cout << "Input epsilon: ";
         std::cin >> eps;
-        if (!(0 < eps && eps < pow(10,-k)))
+        if (!(0 < eps && eps < pow(10, -k)))
         {
             throw std::runtime_error("Wrong epsilon");
         }
 
         long double taylorSeriesMember = x / 2.0;
-        long double taylorSeriesResult = 1;
+        long double taylorSeriesResult = 1.0;
         size_t i = 1;
         while (fabs(taylorSeriesMember) > eps)
         {
             taylorSeriesResult += taylorSeriesMember;
-            taylorSeriesMember *= -x * i / (i+3);
+            taylorSeriesMember *= -x * i / (i + 3);
             i += 2; 
         }
         
