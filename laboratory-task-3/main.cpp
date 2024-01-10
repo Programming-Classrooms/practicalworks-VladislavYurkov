@@ -12,8 +12,24 @@
 #include <random>
 #include <ctime>
 #include <cstdint>
+#include <string>
 
+
+bool isStatic()
+{
+	std::string chosedNumber;
+	std::cout << "Input type of array:\n";
+	std::cout << "1.Static\n";
+	std::cout << "2.Dynamic\n";
+	std::cin >> chosedNumber;
+	if (!(chosedNumber != "1" && chosedNumber != "2")) {
+		throw std::runtime_error("Wrong type");
+	}
+	return chosedNumber == "1";
+}
 
 int main()
 {
+	bool isStatic = isStatic();
+	
 }
