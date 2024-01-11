@@ -71,23 +71,48 @@ bool manualOrRandomFill()
 	return inputMethod == "1";
 }
 
+void setBorders(double& leftBorder, double& rightBorder)
+{
+	std::cout << "Please, enter real borders\n";
+	std::cout << "Left border = ";
+	std::cin >> leftBorder;
+	std::cout << "Right border = ";
+	std::cin >> rightBorder;
+	if (leftBorder > rightBorder) {
+		throw std::runtime_error("Left border bigger than right one");
+	}
+}
+
+double randDouble(double leftBorder, double rightBorder)
+{
+	return rand() * (rightBorder - leftBorder) / RAND_MAX + leftBorder;
+}
+
 void staticArrayFill(double staticArray[], const size_t LENGTH)
 {
 	bool manualFill = manualOrRandomFill();
 	if(manualFill) {
-		std::cout << "Please enter " << LENGTH << " real numbers:\n";
+		std::cout << "Please, enter " << LENGTH << " real numbers:\n";
 		for(size_t i = 0; i < LENGTH; ++i) {
 			std::cin >> staticArray[i];
 		}
-		std::cout << "\nArray filled. Your array:\n";
-		for(size_t i = 0; i < LENGTH; ++i) {
-			std::cout << staticArray[i] << ' ';
-		}
-		std::cout << '\n';
+		
 	}
-	else {
 
+	else {
+		double leftBorder = 0.0;
+		double rightBorder = 0.0; 
+		setBorders(leftBorder, rightBorder);
+		for(size_t i = 0; i < LENGTH; ++i) {
+			staticArray[i] = randDouble(leftBorder, rightBorder);
+		}
 	}
+
+	std::cout << "\nArray filled. Your array:\n";
+	for(size_t i = 0; i < LENGTH; ++i) {
+		std::cout << staticArray[i] << ' ';
+	}
+	std::cout << '\n';
 }
 
 int main()
