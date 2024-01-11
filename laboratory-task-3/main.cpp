@@ -44,6 +44,10 @@ size_t inputArrayLength()
 	std::string length;
 	std::cout << "Input length of array: ";
 	std::getline(std::cin, length);
+	if (length == "")
+	{
+		throw std::runtime_error("Empty input");
+	}
 	if (!isNumber(length)) {
 		throw std::runtime_error("Not a number");
 	}
@@ -51,6 +55,39 @@ size_t inputArrayLength()
 		throw std::runtime_error("Too big");
 	}
 	return stoull(length);
+}
+
+bool manualOrRandomFill()
+{
+	std::string inputMethod; 
+	std::cout << "Choose input method\n";
+	std::cout << "1.From keyboard\n";
+	std::cout << "2.Random numbers\n";
+	std::getline(std::cin, inputMethod);
+	if (inputMethod != "1" && inputMethod != "2")
+	{
+		throw std::runtime_error("Wrong input method");
+	}
+	return inputMethod == "1";
+}
+
+void staticArrayFill(double staticArray[], const size_t LENGTH)
+{
+	bool manualFill = manualOrRandomFill();
+	if(manualFill) {
+		std::cout << "Please enter " << LENGTH << " real numbers:\n";
+		for(size_t i = 0; i < LENGTH; ++i) {
+			std::cin >> staticArray[i];
+		}
+		std::cout << "\nArray filled. Your array:\n";
+		for(size_t i = 0; i < LENGTH; ++i) {
+			std::cout << staticArray[i] << ' ';
+		}
+		std::cout << '\n';
+	}
+	else {
+
+	}
 }
 
 int main()
@@ -65,6 +102,7 @@ int main()
 			const size_t BASE_LENGTH = 1000000;
 			double staticArray[BASE_LENGTH] = {};
 
+			staticArrayFill(staticArray, LENGTH);
 		}
 		else {
 			double* dynamicArray = new double[LENGTH];
