@@ -28,7 +28,7 @@ bool StaticOrDynamic()
 	return chosedNumber == "1";
 }
 
-bool isNumber(std::string line)
+bool isNaturalNumber(std::string line)
 {
 	size_t lineLength = line.length();
 	for (size_t i = 0; i < lineLength; ++i) {
@@ -37,6 +37,27 @@ bool isNumber(std::string line)
 		}
 	}
 	return true;
+}
+
+bool isRealNumber(std::string line)
+{
+	bool isPoint = false;
+	size_t lineLength = line.length();
+	for (size_t i = 0; i < lineLength; ++i) {
+		if(line[i] == '.') {
+			if(!i) {
+				return false;
+			}
+			if(isPoint) {
+				return false;
+			}
+			isPoint = true;
+			continue;
+		}
+		if(!(line[i] >= '0' && line[i] <= '9')) {
+			return false;
+		}
+	}
 }
 
 size_t inputArrayLength()
@@ -48,7 +69,7 @@ size_t inputArrayLength()
 	{
 		throw std::runtime_error("Empty input");
 	}
-	if (!isNumber(length)) {
+	if (!isNaturalNumber(length)) {
 		throw std::runtime_error("Not a number");
 	}
 	if (stoull(length) > 1000000) {
@@ -73,12 +94,21 @@ bool manualOrRandomFill()
 
 void setBorders(double& leftBorder, double& rightBorder)
 {
+	std::string leftBorderInput;
+	std::string rightBorderInput;
 	std::cout << "Please, enter real borders\n";
 	std::cout << "Left border = ";
-	std::cin >> leftBorder;
+	std::cin >> leftBorderInput;
 	std::cout << "Right border = ";
-	std::cin >> rightBorder;
-	if (leftBorder > rightBorder) {
+	std::cin >> rightBorderInput;
+	if(isRealNumber(leftBorderInput) && isRealNumber(rightBorderInput)) {
+		leftBorder = stod(leftBorderInput);
+		rightBorder = stod(rightBorderInput);
+	}
+	else {
+		throw std::runtime_error("Borders is not real numbers");
+	}
+	if(leftBorder > rightBorder) {
 		throw std::runtime_error("Left border bigger than right one");
 	}
 }
