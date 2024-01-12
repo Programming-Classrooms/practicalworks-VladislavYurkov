@@ -21,9 +21,8 @@
 #include <iostream>
 #include <string>
 
-std::string findDelims(std::string line)
+std::string findDelims(std::string line, size_t lineLength)
 {
-    size_t lineLength = line.length();
     std::string delims = "";
     for (size_t i = 0; i < lineLength; ++i) {
         if (!isdigit(line[i]) && !isalpha(line[i])) {
@@ -35,7 +34,43 @@ std::string findDelims(std::string line)
     return delims;
 }
 
+std::string transformLine(std::string line, size_t lineLength, std::string delims)
+{
+    size_t begInd = 0;
+    size_t endInd = 0;
+
+    begInd = line.find_first_not_of(delims);
+
+    while (begInd != std::string::npos)
+    {
+        endInd = line.find_first_of(delims, begInd);
+
+        std::string word = line.substr(begInd, endInd - begInd);
+        std::cout << word << '\n';
+
+        begInd = line.find_first_not_of(delims, endInd);
+
+    }
+    return "";
+}
+
 int main()
 {
+    try {
+        std::string line = "";
+
+        std::cout << "Input string:\n";
+        std::getline(std::cin, line);
+        size_t lineLength = line.length();
+
+        std::string delims = findDelims(line, lineLength);
+        
+        transformLine(line, lineLength, delims);
+
+    }
+    catch (std::exception e){
+        std::cerr << e.what() << '\n';
+    }
+    
     return 0;
 }
