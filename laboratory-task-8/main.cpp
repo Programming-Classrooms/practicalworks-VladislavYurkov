@@ -123,12 +123,17 @@ int main()
         std::getline(std::cin, line);
         
         size_t lineLength = line.length();
+        
         if (!lineLength) {
             throw std::runtime_error("Line is empty");
         }
 
         std::string delims = findDelims(line, lineLength);
         
+        if (line.find_first_not_of(delims) == std::string::npos) {
+            throw std::runtime_error("Line doesn\'t have words");
+        }
+
         std::cout << transformLine(line, lineLength, delims);
 
     }
