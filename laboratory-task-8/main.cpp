@@ -34,8 +34,34 @@ std::string findDelims(std::string line, size_t lineLength)
     return delims;
 }
 
+bool isNumberLessThanFiveSymbols(std::string word) {
+    size_t wordLength = word.length();
+    if(wordLength > 4) {
+        return false;
+    }
+    for (size_t i = 0; i < wordLength; ++i) {
+        if (!isdigit(word[i])) {
+            return false;
+        }
+    }
+    return true;
+}
+
+std::string tranformNumber(std::string word)
+{
+    std::string zeroLine = "0";
+    while (word.length() < 5) {
+        zeroLine.append(word);
+        word = zeroLine;
+        zeroLine = "0";
+    }
+    return word;
+}
+
 std::string transformLine(std::string line, size_t lineLength, std::string delims)
 {
+    std::string newLine = "";
+
     size_t begInd = 0;
     size_t endInd = 0;
 
@@ -46,7 +72,12 @@ std::string transformLine(std::string line, size_t lineLength, std::string delim
         endInd = line.find_first_of(delims, begInd);
 
         std::string word = line.substr(begInd, endInd - begInd);
-        std::cout << word << '\n';
+        
+        std::string transformedWord = "";
+
+        if (isNumberLessThanFiveSymbols(word)) {
+            transformedWord = tranformNumber(word);
+        }
 
         begInd = line.find_first_not_of(delims, endInd);
 
