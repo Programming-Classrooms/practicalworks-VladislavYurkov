@@ -20,6 +20,8 @@
 
 #include <iostream>
 #include <string>
+#include <algorithm>
+
 
 std::string findDelims(std::string line, size_t lineLength)
 {
@@ -58,6 +60,24 @@ std::string tranformNumber(std::string word)
     return word;
 }
 
+bool isOnlyAlphaWord(std::string word)
+{
+    size_t wordLength = word.length();
+    for (size_t i = 0; i < wordLength; ++i) {
+        if (!isalpha(word[i])) {
+            return false;
+        }
+    }
+    return true;
+}
+
+std::string reverseWord(std::string word)
+{
+    std::string reversedWord = word;
+    std::reverse(reversedWord.begin(), reversedWord.end());
+    return reversedWord;
+}
+
 std::string transformLine(std::string line, size_t lineLength, std::string delims)
 {
     std::string newLine = "";
@@ -73,17 +93,26 @@ std::string transformLine(std::string line, size_t lineLength, std::string delim
 
         std::string word = line.substr(begInd, endInd - begInd);
         
-        std::string transformedWord = "";
+        std::string transformedWord = word;
 
         if (isNumberLessThanFiveSymbols(word)) {
             transformedWord = tranformNumber(word);
         }
 
+        if (isOnlyAlphaWord(word)) {
+            transformedWord = reverseWord(word);
+        }
+
         begInd = line.find_first_not_of(delims, endInd);
 
+        newLine.append(transformedWord);
+        if (begInd != std::string::npos) {
+            newLine.append(" ");
+        }
     }
-    return "";
+    return newLine;
 }
+
 
 int main()
 {
@@ -96,7 +125,7 @@ int main()
 
         std::string delims = findDelims(line, lineLength);
         
-        transformLine(line, lineLength, delims);
+        std::cout << transformLine(line, lineLength, delims);
 
     }
     catch (std::exception e){
