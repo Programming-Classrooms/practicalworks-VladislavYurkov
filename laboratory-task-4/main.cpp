@@ -13,16 +13,17 @@
 #include <random>
 #include <time.h>
 #include <iomanip>
+#include <exception>
 
 
-void swap(double& a, double& b)
+void swapArrays(double* &first, double* &second)
 {
-	double help = a;
-	a = b;
-	b = help;
+	double* help = first;
+	first = second;
+	second = help;
 }
 
-bool notPositiveRow(double**& sqrMtrx, size_t sqrMtrxSide, size_t row)
+bool isRowWithoutPosNums(double** sqrMtrx, size_t sqrMtrxSide, size_t row)
 {
 	for (size_t i = 0; i < sqrMtrxSide; ++i) {
 		if (sqrMtrx[row][i] > 0) {
@@ -32,41 +33,40 @@ bool notPositiveRow(double**& sqrMtrx, size_t sqrMtrxSide, size_t row)
 	return true;
 }
 
-size_t firstNotPositiveRow(double**& sqrMtrx, size_t sqrMtrxSide)
+size_t numberOfFirstRowWithoutPosNums(double** sqrMtrx, size_t sqrMtrxSide)
 {
 	for (size_t i = 0; i < sqrMtrxSide;++i) {
-		if (notPositiveRow(sqrMtrx, sqrMtrxSide, i)) {
+		if (isRowWithoutPosNums(sqrMtrx, sqrMtrxSide, i)) {
 			return i + 1;
 		}
 	}
-	return -1;
+	return 0;
 }
 
-void firstNotPosOut(double**& sqrMtrx, size_t sqrMtrxSide)
+void firstNotPosRowPrint(double** sqrMtrx, size_t sqrMtrxSide)
 {
-	if (firstNotPositiveRow(sqrMtrx, sqrMtrxSide) == static_cast<size_t>(-1)) {
+	if (!numberOfFirstRowWithoutPosNums(sqrMtrx, sqrMtrxSide)) {
 		std::cout << "This matrix doesn\'t have rows without positive numbers";
 	}
 	else {
-		std::cout << "First row that have no positive numbers has number " << firstNotPositiveRow(sqrMtrx, sqrMtrxSide);
+		std::cout << "First row that have no positive numbers has number " << numberOfFirstRowWithoutPosNums(sqrMtrx, sqrMtrxSide);
 	}
 }
 
-void rowSwap(double**& sqrMtrx, size_t sqrMtrxSide,size_t a, size_t b)
+void rowSwap(double** sqrMtrx, size_t firstRow, size_t secondRow)
 {
-	for (size_t i = 0; i < sqrMtrxSide; ++i) {
-		swap(sqrMtrx[a][i], sqrMtrx[b][i]);
-	}
+	swapArrays(sqrMtrx[firstRow], sqrMtrx[secondRow]);
 }
 
-void columnSwap(double**& sqrMtrx, size_t sqrMtrxSide,size_t a, size_t b)
+//Делаю циклом потому что поменять колонны местами без обращения к конкретному элементу не возможно
+void columnSwap(double** sqrMtrx, size_t sqrMtrxSide,  size_t firstColumn, size_t secondColumn)
 {
-	for (size_t i = 0; i < sqrMtrxSide; ++i) {
-		swap(sqrMtrx[i][a], sqrMtrx[i][b]);
-	}
+		for (size_t i = 0; i < sqrMtrxSide; ++i) {
+			std::swap(sqrMtrx[i][firstColumn], sqrMtrx[i][secondColumn]);
+		}
 }
 
-void maxElInCorner(double**& sqrMtrx, size_t sqrMtrxSide, size_t iter)
+void moveMaxElemInCorner(double** sqrMtrx, size_t sqrMtrxSide, size_t iter)
 {
 	size_t max_i = iter, max_j = iter;
 	for (size_t i = iter; i < sqrMtrxSide; ++i) {
@@ -77,18 +77,18 @@ void maxElInCorner(double**& sqrMtrx, size_t sqrMtrxSide, size_t iter)
 			}
 		}
 	}
-	rowSwap(sqrMtrx, sqrMtrxSide, iter, max_i);
+	rowSwap(sqrMtrx, iter, max_i);
 	columnSwap(sqrMtrx, sqrMtrxSide, iter, max_j);
 }
 
-void maxSort(double**& sqrMtrx, size_t sqrMtrxSide)
+void moveMaxElemsInDiagonal(double** sqrMtrx, size_t sqrMtrxSide)
 {
 	for (size_t i = 0; i < sqrMtrxSide; ++i) {
-		maxElInCorner(sqrMtrx, sqrMtrxSide, i);
+		moveMaxElemInCorner(sqrMtrx, sqrMtrxSide, i);
 	}
 }
 
-void memory(double**& sqrMtrx, size_t sqrMtrxSide)
+void memAllocSqrMtrx(double**& sqrMtrx, size_t sqrMtrxSide)
 {
 	sqrMtrx = new double* [sqrMtrxSide];
 	for (size_t i = 0; i < sqrMtrxSide; ++i) {
@@ -96,37 +96,59 @@ void memory(double**& sqrMtrx, size_t sqrMtrxSide)
 	}
 }
 
-void mtrxOut(double**& sqrMtrx, size_t sqrMtrxSide)
+void printMtrx(double** sqrMtrx, size_t sqrMtrxSide)
 {
+	size_t width;
+	size_t numberOfBlankLines;
+	std::cout << "Please, enter the desired width of the array elements\n";
+	std::cin >> width;
+	std::cout << "Please, enter number of blank lines after matrix\n";
+	std::cin >> numberOfBlankLines;
 	for (size_t i = 0; i < sqrMtrxSide; ++i) {
 		for (size_t j = 0; j < sqrMtrxSide; ++j) {
-			std::cout << std::setw(12) << sqrMtrx[i][j];
+			std::cout << std::setw(width) << sqrMtrx[i][j];
 		}
 		std::cout << '\n';
 	}
-	std::cout << "\n\n\n";
+	for (size_t i = 0; i <= numberOfBlankLines; ++i) {
+		std::cout << '\n';
+	}
 }
 
-void mtrxFillRandom(double**& sqrMtrx, size_t sqrMtrxSide)
-{
-	double a, b;
-	srand(time(NULL));
-	std::cout << "The matrix will be filled with random real numbers between a and b\n" << "Input a: ";
-	std::cin >> a;
-	std::cout << "Input b: ";
-	std::cin >> b;
-	if (a > b) {
-		swap(a, b);
+double randDouble(double leftBorder, double rightBorder) {
+	return leftBorder + rand() * (rightBorder - leftBorder) / RAND_MAX;
+}
+
+void setBorders(double& leftBorder, double& rightBorder) {
+	std::cout << "Input left border\n";
+	std::cin >> leftBorder;
+	std::cout << "Input right border\n";
+	std::cin >> rightBorder;
+
+	if (leftBorder > rightBorder) {
+		throw std::runtime_error("Wrong borders");
 	}
+}
+
+//Заполнение массива случайными числами неразрывно связано с его выводом, не могу убрать вывод массива
+void mtrxFillRandomAndPrint(double** sqrMtrx, size_t sqrMtrxSide)
+{
+	srand(time(NULL));
+
+	double leftBorder = 0;
+	double rightBorder = 0;
+	setBorders(leftBorder, rightBorder);
+
 	for (size_t i = 0; i < sqrMtrxSide; ++i) {
 		for (size_t j = 0; j < sqrMtrxSide; ++j) {
-			sqrMtrx[i][j] = a + rand() * (b - a) / RAND_MAX;
+			sqrMtrx[i][j] = randDouble(leftBorder, rightBorder);
 		}
 	}
-	mtrxOut(sqrMtrx, sqrMtrxSide);
+
+	printMtrx(sqrMtrx, sqrMtrxSide);
 }
 
-void mtrxFillKeyboard(double**& sqrMtrx, size_t sqrMtrxSide)
+void mtrxFillKeyboard(double** sqrMtrx, size_t sqrMtrxSide)
 {
 	std::cout << "Please, input matrix from keyboard\n";
 	for (size_t i = 0; i < sqrMtrxSide; ++i) {
@@ -136,37 +158,30 @@ void mtrxFillKeyboard(double**& sqrMtrx, size_t sqrMtrxSide)
 	}
 }
 
-void mtrxFill(double**& sqrMtrx, size_t sqrMtrxSide)
+void fillSqrMtrx(double** sqrMtrx, size_t sqrMtrxSide)
 {
 	int16_t inputMethod;
 	std::cout << "Choose input method\n" << "1.Random\n" << "2.From keyboard\n";
 	std::cin >> inputMethod;
 	switch (inputMethod) {
 	case 1:
-		mtrxFillRandom(sqrMtrx, sqrMtrxSide);
+		mtrxFillRandomAndPrint(sqrMtrx, sqrMtrxSide);
 		break;
 	case 2:
 		mtrxFillKeyboard(sqrMtrx, sqrMtrxSide);
 		break;
 	default:
-		throw;
+		throw std::runtime_error("");
 		break;
 	}
 }
 
-void mtrxDel(double**& sqrMtrx, size_t sqrMtrxSide)
+void memCleanSqrMtrx(double**& sqrMtrx, size_t sqrMtrxSide)
 {
 	for (size_t i = 0; i < sqrMtrxSide; ++i) {
 		delete sqrMtrx[i];
 	}
 	delete sqrMtrx;
-}
-
-void wrongInput(double**& sqrMtrx, size_t sqrMtrxSide)
-{
-	mtrxDel(sqrMtrx,sqrMtrxSide);
-	std::cout << "Wrong input";
-	exit(-1);
 }
 
 int main()
@@ -180,24 +195,25 @@ int main()
 		std::cin >> side_test;
 		if (side_test < 0)
 		{
-			throw;
+			throw std::runtime_error("wrong side");
 		}
 		sqrMtrxSide = side_test;
 
-		memory(sqrMtrx, sqrMtrxSide);
+		memAllocSqrMtrx(sqrMtrx, sqrMtrxSide);
 		mtrxFill(sqrMtrx, sqrMtrxSide);
 
-		maxSort(sqrMtrx, sqrMtrxSide);
+		moveMaxElemsInDiagonal(sqrMtrx, sqrMtrxSide);
 		std::cout << "Matrix sorted" << '\n';
-		mtrxOut(sqrMtrx, sqrMtrxSide);
+		printMtrx(sqrMtrx, sqrMtrxSide);
 
-		firstNotPosOut(sqrMtrx, sqrMtrxSide);
+		firstNotPosRowPrint(sqrMtrx, sqrMtrxSide);
 
-		mtrxDel(sqrMtrx, sqrMtrxSide);
+		memCleanSqrMtrx(sqrMtrx, sqrMtrxSide);
 	}
-	catch (...)
+	catch (std::runtime_error e)
 	{
-		wrongInput(sqrMtrx,sqrMtrxSide);
+		std::cerr << e.what() << '\n';
+		memCleanSqrMtrx(sqrMtrx, sqrMtrxSide);
 	}
 	return 0;
 }
