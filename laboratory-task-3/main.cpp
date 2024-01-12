@@ -58,6 +58,7 @@ bool isRealNumber(std::string line)
 			return false;
 		}
 	}
+	return true;
 }
 
 size_t inputArrayLength()
@@ -145,6 +146,31 @@ void staticArrayFill(double staticArray[], const size_t LENGTH)
 	std::cout << '\n';
 }
 
+size_t maxChainOfDiffNumsLengthStatic(double staticArray[], const size_t LENGTH)
+{
+	size_t currentMaxChain = 0;
+	bool founded = false;
+	for (size_t i = 0; i < LENGTH - 1; ++i) {
+		for (size_t j = i + 1; j < LENGTH; ++j) {
+			for (size_t k = j; k != i; --k) {
+				if(staticArray[k - 1] == staticArray[j]) {
+					currentMaxChain = std::max(currentMaxChain, j - i);
+					founded = true;
+					break;
+				}
+			}
+			if (founded) {
+				break;
+			}
+		}
+		if(!founded) {
+			currentMaxChain = std::max(currentMaxChain, LENGTH - i);
+		}
+		founded = false;
+	}
+	return currentMaxChain;
+}
+
 int main()
 {	
 	try {
@@ -158,6 +184,8 @@ int main()
 			double staticArray[BASE_LENGTH] = {};
 
 			staticArrayFill(staticArray, LENGTH);
+
+			std::cout << maxChainOfDiffNumsLengthStatic(staticArray, LENGTH);
 		}
 		else {
 			double* dynamicArray = new double[LENGTH];
