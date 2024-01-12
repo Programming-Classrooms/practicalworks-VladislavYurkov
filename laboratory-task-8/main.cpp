@@ -121,14 +121,18 @@ int main()
 
         std::cout << "Input string:\n";
         std::getline(std::cin, line);
+        
         size_t lineLength = line.length();
+        if (!lineLength) {
+            throw std::runtime_error("Line is empty");
+        }
 
         std::string delims = findDelims(line, lineLength);
         
         std::cout << transformLine(line, lineLength, delims);
 
     }
-    catch (std::exception e){
+    catch (std::runtime_error e) {
         std::cerr << e.what() << '\n';
     }
     
