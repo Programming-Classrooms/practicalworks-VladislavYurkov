@@ -103,6 +103,22 @@ bool manualOrRandomFill()
 	return inputMethod == "1";
 }
 
+void printStaticArray(double staticArray[], const size_t LENGTH)
+{
+	for (size_t i = 0; i < LENGTH; ++i) {
+		std::cout << staticArray[i] << ' ';
+	}
+	std::cout << '\n';
+}
+
+void printDynamicArray(double* dynamicArray, const size_t LENGTH)
+{
+	for (size_t i = 0; i < LENGTH; ++i) {
+		std::cout << dynamicArray[i] << ' ';
+	}
+	std::cout << '\n';
+}
+
 void setBorders(double& leftBorder, double& rightBorder)
 {
 	std::string leftBorderInput;
@@ -150,10 +166,31 @@ void staticArrayFill(double staticArray[], const size_t LENGTH)
 	}
 
 	std::cout << "\nArray filled. Your array:\n";
-	for(size_t i = 0; i < LENGTH; ++i) {
-		std::cout << staticArray[i] << ' ';
+	printStaticArray(staticArray, LENGTH);
+}
+
+void dynamicArrayFill(double* dynamicArray, const size_t LENGTH)
+{
+	bool manualFill = manualOrRandomFill();
+	if(manualFill) {
+		std::cout << "Please, enter " << LENGTH << " real numbers:\n";
+		for(size_t i = 0; i < LENGTH; ++i) {
+			std::cin >> dynamicArray[i];
+		}
+		
 	}
-	std::cout << '\n';
+
+	else {
+		double leftBorder = 0.0;
+		double rightBorder = 0.0; 
+		setBorders(leftBorder, rightBorder);
+		for(size_t i = 0; i < LENGTH; ++i) {
+			dynamicArray[i] = randDouble(leftBorder, rightBorder);
+		}
+	}
+
+	std::cout << "\nArray filled. Your array:\n";
+	printDynamicArray(dynamicArray, LENGTH);
 }
 
 size_t maxChainOfDiffNumsLengthStatic(double staticArray[], const size_t LENGTH)
@@ -164,6 +201,31 @@ size_t maxChainOfDiffNumsLengthStatic(double staticArray[], const size_t LENGTH)
 		for (size_t j = i + 1; j < LENGTH; ++j) {
 			for (size_t k = j; k != i; --k) {
 				if(staticArray[k - 1] == staticArray[j]) {
+					currentMaxChain = std::max(currentMaxChain, j - i);
+					founded = true;
+					break;
+				}
+			}
+			if (founded) {
+				break;
+			}
+		}
+		if(!founded) {
+			currentMaxChain = std::max(currentMaxChain, LENGTH - i);
+		}
+		founded = false;
+	}
+	return currentMaxChain;
+}
+
+size_t maxChainOfDiffNumsLengthDynamic(double* dynamicArray, const size_t LENGTH)
+{
+	size_t currentMaxChain = 0;
+	bool founded = false;
+	for (size_t i = 0; i < LENGTH - 1; ++i) {
+		for (size_t j = i + 1; j < LENGTH; ++j) {
+			for (size_t k = j; k != i; --k) {
+				if(dynamicArray[k - 1] == dynamicArray[j]) {
 					currentMaxChain = std::max(currentMaxChain, j - i);
 					founded = true;
 					break;
@@ -213,6 +275,76 @@ double sumBetweenFirstAndLastZerosStatic(double staticArray[], const size_t LENG
 	return sum;
 }
 
+double sumBetweenFirstAndLastZerosDynamic(double* dynamicArray, const size_t LENGTH) {
+	size_t begInd = -1;
+	size_t endInd = -1;
+	for (size_t i = 0; i < LENGTH; ++i) {
+		if (!dynamicArray[i]) {
+			begInd = i;
+			break;
+		}
+	}
+
+	if (begInd == -1) {
+		throw std::runtime_error("There is no zeros in array");
+	}
+
+	for (size_t i = LENGTH - 1; i != 0; --i) {
+		if(!dynamicArray[i]) {
+			endInd = i;
+			break;
+		}
+	}
+
+	if (endInd == begInd) {
+		throw std::runtime_error("There is only one zero in array");
+	}
+
+	double sum = 0.0;
+	for (size_t i = begInd + 1; i < endInd; ++i) {
+		sum += dynamicArray[i];
+	}
+	return sum;
+}
+
+void sortEverySecondElemFromGivenIndStatic(double staticArray[], const size_t LENGTH, size_t index)
+{
+	for (size_t i = index; i <= LENGTH - 1; i += 2) {
+		for (size_t j = i + 2; j <= LENGTH - 1; j += 2) {
+			if (staticArray[i] > staticArray[j]) {
+				std::swap(staticArray[i], staticArray[j]);
+			}
+		}
+	}
+}
+
+void sortEverySecondElemFromGivenIndDynamic(double* dynamicArray, const size_t LENGTH, size_t index)
+{
+	for (size_t i = index; i <= LENGTH - 1; i += 2) {
+		for (size_t j = i + 2; j <= LENGTH - 1; j += 2) {
+			if (dynamicArray[i] > dynamicArray[j]) {
+				std::swap(dynamicArray[i], dynamicArray[j]);
+			}
+		}
+	}
+}
+
+void sortStaticArrayDependingOnParity(double staticArray[], const size_t LENGTH) {
+	sortEverySecondElemFromGivenIndStatic(staticArray, LENGTH, 0);
+	sortEverySecondElemFromGivenIndStatic(staticArray, LENGTH, 1);
+
+	std::cout << "Array sorted:\n";
+	printStaticArray(staticArray, LENGTH);
+}
+
+void sortDynamicArrayDependingOnParity(double* dynamicArray, const size_t LENGTH) {
+	sortEverySecondElemFromGivenIndDynamic(dynamicArray, LENGTH, 0);
+	sortEverySecondElemFromGivenIndDynamic(dynamicArray, LENGTH, 1);
+
+	std::cout << "Array sorted:\n";
+	printDynamicArray(dynamicArray, LENGTH);
+}
+
 int main()
 {	
 	srand(time(NULL));
@@ -228,16 +360,42 @@ int main()
 
 			staticArrayFill(staticArray, LENGTH);
 
-			std::cout << maxChainOfDiffNumsLengthStatic(staticArray, LENGTH) << '\n';
+			std::cout << '\n';
+
+			std::cout << "Max chain of different numbers is " << maxChainOfDiffNumsLengthStatic(staticArray, LENGTH) << '\n' << '\n';
+			
 			try {
-				std::cout << sumBetweenFirstAndLastZerosStatic(staticArray, LENGTH) << '\n';
+				double sum = sumBetweenFirstAndLastZerosStatic(staticArray, LENGTH);
+				std::cout << "Sum between first and last zero = " << sum << '\n';
 			}
 			catch (std::runtime_error e) {
 				std::cerr << e.what() << '\n';
 			}
+
+			std::cout << '\n';
+
+			sortStaticArrayDependingOnParity(staticArray, LENGTH);
 		}
 		else {
 			double* dynamicArray = new double[LENGTH];
+
+			dynamicArrayFill(dynamicArray, LENGTH);
+
+			std::cout << '\n';
+
+			std::cout << "Max chain of different numbers is " << maxChainOfDiffNumsLengthDynamic(dynamicArray, LENGTH) << '\n' << '\n';
+			
+			try {
+				double sum = sumBetweenFirstAndLastZerosDynamic(dynamicArray, LENGTH);
+				std::cout << "Sum between first and last zero = " << sum << '\n';
+			}
+			catch (std::runtime_error e) {
+				std::cerr << e.what() << '\n';
+			}
+
+			std::cout << '\n';
+
+			sortDynamicArrayDependingOnParity(dynamicArray, LENGTH);
 		}
 	}
 	catch(std::runtime_error e) {
