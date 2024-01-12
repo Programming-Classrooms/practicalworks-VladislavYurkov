@@ -44,6 +44,12 @@ bool isRealNumber(std::string line)
 	bool isPoint = false;
 	size_t lineLength = line.length();
 	for (size_t i = 0; i < lineLength; ++i) {
+		if (!i) {
+			if (line[0] == '-') {
+				i++;
+				continue;
+			}
+		}
 		if(line[i] == '.') {
 			if(!i) {
 				return false;
@@ -52,6 +58,7 @@ bool isRealNumber(std::string line)
 				return false;
 			}
 			isPoint = true;
+			++i;
 			continue;
 		}
 		if(!(line[i] >= '0' && line[i] <= '9')) {
@@ -72,6 +79,9 @@ size_t inputArrayLength()
 	}
 	if (!isNaturalNumber(length)) {
 		throw std::runtime_error("Not a number");
+	}
+	if (!stoull(length)) {
+		throw std::runtime_error("Zero length is not allowed");
 	}
 	if (stoull(length) > 1000000) {
 		throw std::runtime_error("Too big");
@@ -171,8 +181,41 @@ size_t maxChainOfDiffNumsLengthStatic(double staticArray[], const size_t LENGTH)
 	return currentMaxChain;
 }
 
+double sumBetweenFirstAndLastZerosStatic(double staticArray[], const size_t LENGTH) {
+	size_t begInd = -1;
+	size_t endInd = -1;
+	for (size_t i = 0; i < LENGTH; ++i) {
+		if (!staticArray[i]) {
+			begInd = i;
+			break;
+		}
+	}
+
+	if (begInd == -1) {
+		throw std::runtime_error("There is no zeros in array");
+	}
+
+	for (size_t i = LENGTH - 1; i != 0; --i) {
+		if(!staticArray[i]) {
+			endInd = i;
+			break;
+		}
+	}
+
+	if (endInd == begInd) {
+		throw std::runtime_error("There is only one zero in array");
+	}
+
+	double sum = 0.0;
+	for (size_t i = begInd + 1; i < endInd; ++i) {
+		sum += staticArray[i];
+	}
+	return sum;
+}
+
 int main()
 {	
+	srand(time(NULL));
 	try {
 
 		bool isStatic = StaticOrDynamic();
@@ -185,7 +228,13 @@ int main()
 
 			staticArrayFill(staticArray, LENGTH);
 
-			std::cout << maxChainOfDiffNumsLengthStatic(staticArray, LENGTH);
+			std::cout << maxChainOfDiffNumsLengthStatic(staticArray, LENGTH) << '\n';
+			try {
+				std::cout << sumBetweenFirstAndLastZerosStatic(staticArray, LENGTH) << '\n';
+			}
+			catch (std::runtime_error e) {
+				std::cerr << e.what() << '\n';
+			}
 		}
 		else {
 			double* dynamicArray = new double[LENGTH];
@@ -194,4 +243,5 @@ int main()
 	catch(std::runtime_error e) {
 		std::cerr << e.what() << '\n';
 	}
+	return 0;
 }
