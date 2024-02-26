@@ -8,6 +8,7 @@ MyString::MyString()
 
 MyString::MyString(const char* line)
 {
+	this->line = new char[SHRT_MAX];
 	strcpy(this->line,line);
 	this->lineLength = strlen(line);
 }

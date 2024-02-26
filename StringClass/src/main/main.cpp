@@ -1,11 +1,11 @@
-#include "MyString.hpp"
+#include "src/MyString/MyString.hpp"
 
 int main()
 {
 	try {
 
 		MyString line1 = "Hello, ";
-		MyString line2 = "world!";
+		MyString line2 = "world!\n";
 
 		MyString line = line1 + line2;
 
