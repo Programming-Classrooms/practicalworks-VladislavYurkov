@@ -185,7 +185,7 @@ TEST(CONVERSION_OPERATORS_TEST, TO_INT64_T)
 
 TEST(CONVERSION_OPERATORS, TO_DOUBLE)
 {
-    String obj("Nan");
+    String obj("String");
     String chizlo("23");
     String point("45.34");
     EXPECT_DOUBLE_EQ((double) chizlo, 23.0);
