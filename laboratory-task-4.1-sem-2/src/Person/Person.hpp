@@ -2,7 +2,7 @@
 #define PERSON_HPP
 #include <iostream>
 #include <cstring>
-
+#include <cstdint>
 
 class Person
 {
