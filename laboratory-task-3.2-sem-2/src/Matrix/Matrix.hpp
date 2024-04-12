@@ -97,4 +97,4 @@ public:
     friend std::ostream& operator<<(std::ostream&, const Matrix&);
 };
 
-#endif
+#endif //MATRIX_HPP
