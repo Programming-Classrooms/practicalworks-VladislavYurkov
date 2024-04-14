@@ -1,9 +1,9 @@
-#include "src/FruitTree/FruitTree.hpp"
-#include "src/ForestTree/ForestTree.hpp"
-#include "src/Tree/Tree.hpp"
+#include "src/TreesContainer/TreesContainer.hpp"
+
+
 int main()
 {
-	ForestTree tree;
-	tree.print();
-	return 0;
+	TreesContainer treesList("src/Resources/trees.txt");
+	treesList.print();
+	treesList.sortedPrint();
 }

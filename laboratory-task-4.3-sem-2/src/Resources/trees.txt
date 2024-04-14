@@ -1,0 +1,4 @@
+Oak 12 deciduous 100
+Peach 5 deciduous 30.0 2.5
+Pear 10 deciduous 25.0 1.0
+Pine 30 coniferuos 55

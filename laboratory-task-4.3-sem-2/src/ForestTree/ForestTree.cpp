@@ -5,7 +5,17 @@ Tree(),
 woodAmount(0)
 {}
 
+ForestTree::ForestTree(std::string initName, size_t initAge, TreeType initType, size_t initWoodAmount) :
+Tree(initName, initAge, initType),
+woodAmount(initWoodAmount)
+{}
+
 ForestTree::~ForestTree(){}
+
+bool ForestTree::isDeciduous() const
+{
+    return (this->type == TreeType::DECIDUOUS);
+}
 
 void ForestTree::print() const
 {

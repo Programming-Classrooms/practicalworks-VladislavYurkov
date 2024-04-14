@@ -18,9 +18,14 @@ protected:
     TreeType type;
 public:
     Tree();
+    Tree(std::string, size_t, TreeType);
     virtual ~Tree() = 0;
 
-    void  virtual print() const = 0;
+    bool virtual isDeciduous() const = 0;
+
+    void virtual print() const = 0;
+
+    friend bool compTrees(Tree*&, Tree*&);
 };
 
 #endif
