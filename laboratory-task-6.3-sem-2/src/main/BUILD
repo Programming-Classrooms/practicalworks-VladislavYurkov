@@ -6,5 +6,5 @@ cc_binary(
     deps = [
         "//src/Functions:Functions",
     ],
-    #data = ["//src/txtFiles:files"],
+    data = ["//src/txtFiles:files"],
 )
