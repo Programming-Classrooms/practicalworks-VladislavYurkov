@@ -1,6 +1,7 @@
 #ifndef FUNCTIONS_HPP
 #define FUNCTIONS_HPP
 #include "src/Train/Train.hpp"
+#include <algorithm>
 #include <fstream>
 
 void readTrains(std::ifstream&, std::vector<Train>&);
