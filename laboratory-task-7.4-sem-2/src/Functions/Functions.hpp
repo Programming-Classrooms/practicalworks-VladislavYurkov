@@ -2,6 +2,7 @@
 #define FUNCTIONS_HPP
 #include <iostream>
 #include <fstream>
+#include <algorithm>
 #include <set>
 #include <map>
 #include <string>
