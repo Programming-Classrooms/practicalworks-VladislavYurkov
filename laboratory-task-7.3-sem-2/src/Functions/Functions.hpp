@@ -5,6 +5,7 @@
 #include <map>
 #include <string>
 #include <locale>
+#include <algorithm>
 
 void readWords(std::wifstream&, std::map<std::wstring, size_t>&);
 
