@@ -58,8 +58,24 @@ void printDriversByMark(const std::vector<BusRoute>& routesVect, std::string mar
     std::cout << "Drivers that work on " << mark << ":\n";
     for (auto route : routesVect) {
         if (route.getBusMark() == mark) {
-            std::cout << route.getDriverSurname();
+            std::cout << route.getDriverSurname() << '\n';
         }
     }
-    std::cout << '\n';
+}
+
+size_t maxDiffMarks(const std::vector<BusRoute>& routesVect)
+{
+    std::map<size_t, std::set<std::string>> routesMap;
+    for (auto route : routesVect) {
+        routesMap[route.getRouteNumber()].insert(route.getBusMark());
+    }
+    size_t maxLen = 0;
+    size_t maxRouteNum = 0; 
+    for (auto route : routesMap) {
+        if (route.second.size() > maxLen) {
+            maxRouteNum = route.first;
+            maxLen = route.second.size();
+        }
+    }
+    return maxRouteNum;
 }

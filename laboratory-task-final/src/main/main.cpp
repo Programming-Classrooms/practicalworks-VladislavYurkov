@@ -14,8 +14,10 @@ int main()
 	vectToMap(busRoutes, routesMapCont);
 	//printRoutesMap(routesMapCont);
 
-	printByRouteNum(busRoutes, 100);
-	printDriversByMark(busRoutes, "Икарус");
+	//printByRouteNum(busRoutes, 100);
+	//printDriversByMark(busRoutes, "Икарус");
+
+	std::cout << maxDiffMarks(busRoutes) << '\n';
 
 	return 0;
 }
