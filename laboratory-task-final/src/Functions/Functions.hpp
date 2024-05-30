@@ -12,6 +12,12 @@ void printRoutesVect(const std::vector<BusRoute>& routesVect);
 void routesSort(std::vector<BusRoute>& routesVect);
 
 void vectToMap(const std::vector<BusRoute>& routesVect, 
-               std::map<size_t, BusRoute> routesMap);
+               std::map<size_t, BusRoute>& routesMap);
+
+void printRoutesMap(const std::map<size_t, BusRoute>& routesMap);
+
+void printByRouteNum(const std::vector<BusRoute>& routesVect, size_t routeNumber);
+
+void printDriversByMark(const std::vector<BusRoute>& routesVect, std::string mark);
 
 #endif

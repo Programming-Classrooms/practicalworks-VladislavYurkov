@@ -8,10 +8,14 @@ int main()
 	fileIn.close();
 	
 	routesSort(busRoutes);
-	printRoutesVect(busRoutes);
+	//printRoutesVect(busRoutes);
 
 	std::map<size_t,BusRoute> routesMapCont;
-	
+	vectToMap(busRoutes, routesMapCont);
+	//printRoutesMap(routesMapCont);
+
+	printByRouteNum(busRoutes, 100);
+	printDriversByMark(busRoutes, "Икарус");
 
 	return 0;
 }
