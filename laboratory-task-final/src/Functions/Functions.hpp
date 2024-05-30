@@ -4,6 +4,7 @@
 #include <fstream>
 #include <map>
 #include <set>
+#include <algorithm>
 #include "src/BusRoute/BusRoute.hpp"
 
 void fileToBusVect(std::vector<BusRoute>& routesVect, std::ifstream& fileIn);
