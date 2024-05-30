@@ -79,3 +79,11 @@ size_t maxDiffMarks(const std::vector<BusRoute>& routesVect)
     }
     return maxRouteNum;
 }
+
+void deleteByKey(std::map<size_t, BusRoute>& routesMap, size_t key)
+{
+    if (routesMap.find(key) == routesMap.end()) {
+        throw std::invalid_argument("No route with such key!");
+    }
+    routesMap.erase(key);
+}

@@ -23,4 +23,6 @@ void printDriversByMark(const std::vector<BusRoute>& routesVect, std::string mar
 
 size_t maxDiffMarks(const std::vector<BusRoute>& routesVect);
 
+void deleteByKey(std::map<size_t, BusRoute>& routesMap, size_t key);
+
 #endif

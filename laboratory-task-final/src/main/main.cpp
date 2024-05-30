@@ -17,7 +17,11 @@ int main()
 	//printByRouteNum(busRoutes, 100);
 	//printDriversByMark(busRoutes, "Икарус");
 
-	std::cout << maxDiffMarks(busRoutes) << '\n';
+	//std::cout << maxDiffMarks(busRoutes) << '\n';
+
+	//deleteByKey(routesMapCont, 21);
+	//printRoutesMap(routesMapCont);
+	
 
 	return 0;
 }
